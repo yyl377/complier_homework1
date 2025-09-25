@@ -31,6 +31,17 @@ class A2I {
         self.l2i_aux(s)
         fi fi;
     };
+
+    i2a(num : Int) : String {
+        -- Implementing integer to string conversion
+        let result : String <- "" in
+        let n : Int <- num in
+        while n > 0 loop
+            result <- result.concat(c2i(n % 10));
+            n <- n / 10;
+        pool;
+        result;
+    };
 };
 
 class List {
@@ -81,7 +92,7 @@ class Main {
     a2i : A2I;
 
     init() : SELF_TYPE {
-        stack <- new List;
+        stack <- new Cons("init", new List);
         a2i <- new A2I;
         self;
     };
@@ -106,7 +117,7 @@ class Main {
                     stack <- stack.tail();
                     let sum : Int in
                     sum <- a + b;
-                    stack <- stack.cons(z.i2a(sum))
+                    stack <- stack.cons(a2i.i2a(sum))
                 else
                     if input = "s" then
                         let a : String in
